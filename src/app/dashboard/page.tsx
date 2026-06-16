@@ -1,47 +1,51 @@
+
 "use client";
 
-import Navbar from "@/components/Navbar"
+import Navbar from "@/components/Navbar";
 import TaskCard from "@/components/TaskCard";
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 type Task = {
   _id: string;
   title: string;
   description: string;
   priority: string;
-  completion: boolean;
+  status: string;
+  event: string;
+  dueDate: string;
 };
 
-export default function Home(){
+export default function Home() {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-    const [tasks,setTasks] = useState<Task[]>([]);
+  async function fetchTasks() {
+    const response = await fetch("/api/tasks");
+    const data = await response.json();
+    setTasks(data);
+  }
 
-    async function fetchTasks() {
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
-      const response = await fetch("/api/tasks");
-      const data = await response.json();
-      setTasks(data);
-    }
+  return (
+    <>
+      <Navbar />
 
-    useEffect(() => {
-      fetchTasks();
-    }, []);
-
-
-    return (
-      <>
-        <Navbar />
-        <div className="flex flex-wrap items-start gap-4 m-3">
-          {tasks.map((task)=>(
-            <TaskCard 
-              key={task._id}
-              title={task.title}
-              description={task.description}
-              priority={task.priority}
-              completion={task.completion}
-            />
-          ))}
-        </div>
-      </>
-    );
+      <div className="flex flex-wrap items-start gap-4 m-3">
+        {tasks.map((task) => (
+          <TaskCard
+            id={task._id}
+            key={task._id}
+            title={task.title}
+            description={task.description}
+            priority={task.priority}
+            status={task.status}
+            event={task.event}
+            dueDate={task.dueDate}
+          />
+        ))}
+      </div>
+    </>
+  );
 }

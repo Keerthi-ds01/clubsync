@@ -13,10 +13,21 @@ const TaskSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    completed: {
-        type: Boolean,
-        default: false,
+
+    status: {
+        type: String,
+        default: "todo",
     },
+
+    event: {
+        type: String,
+        default: "General",
+    },
+
+    dueDate: {
+        type: Date,
+    },
+
     createdAt: {
         type: Date,
         default: Date.now,
