@@ -24,6 +24,11 @@ const TaskSchema = new mongoose.Schema({
         default: "General",
     },
 
+    assignedTo: {
+        type: String,
+        default: "Unassigned",
+    },
+
     dueDate: {
         type: Date,
     },

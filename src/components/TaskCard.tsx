@@ -6,7 +6,9 @@ type TaskCardProps = {
     priority: string;
     status: string;
     event: string;
+    assignedTo: string;
     dueDate: string;
+    
 };
 
 const TaskCard = ({
@@ -16,7 +18,9 @@ const TaskCard = ({
     priority,
     status,
     event,
+    assignedTo,
     dueDate,
+    
 }: TaskCardProps) => {
     const bgClass =
         priority.toLowerCase() === "high"
@@ -57,6 +61,10 @@ const TaskCard = ({
 
                 <div className="bg-white rounded-lg p-2 text-sm">
                     <strong>Event:</strong> {event}
+                </div>
+
+                <div className="bg-white rounded-lg p-2 text-sm">
+                    <strong>Assigned To:</strong> {assignedTo}
                 </div>
 
                 <div className="bg-white rounded-lg p-2 text-sm">

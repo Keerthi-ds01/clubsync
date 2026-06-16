@@ -12,6 +12,7 @@ const CreateTask = () => {
     const [status, setStatus] = useState("todo");
     const [taskEvent, setTaskEvent] = useState("General");
     const [dueDate, setDueDate] = useState("");
+    const [assignedTo, setAssignedTo] = useState("Unassigned");
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -30,11 +31,13 @@ const CreateTask = () => {
                     priority,
                     status,
                     event: taskEvent,
+                    assignedTo,
                     dueDate,
                 }),
             });
 
             const data = await response.json();
+            console.log("Saved task:", data);
             console.log(data);
 
             setTitle("");
@@ -119,6 +122,20 @@ const CreateTask = () => {
                     </option>
                     <option value="Workshop">Workshop</option>
                     <option value="Hackathon">Hackathon</option>
+                </select>
+                
+                <h3 className="text-2xl">Assigned To</h3>
+
+                <select
+                    value={assignedTo}
+                    onChange={(e) => setAssignedTo(e.target.value)}
+                    className="w-full p-3 bg-white rounded-xl"
+                >
+                <option value="Unassigned">Unassigned</option>
+                <option value="Keerthi">Keerthi</option>
+                <option value="Rahul">Rahul</option>
+                <option value="Ananya">Ananya</option>
+                <option value="Priya">Priya</option>
                 </select>
 
                 <h3 className="text-2xl">Due Date</h3>
