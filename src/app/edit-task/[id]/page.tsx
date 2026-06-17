@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 
 export default function EditTaskPage() {
-    const params = useParams();
+
     const router = useRouter();
 
     const [title, setTitle] = useState("");
@@ -17,9 +17,15 @@ export default function EditTaskPage() {
     const [assignedTo, setAssignedTo] = useState("Unassigned");
     const [dueDate, setDueDate] = useState("");
 
+    const id = (useParams() as { id: string }).id;
+
     useEffect(() => {
+
+        if (!id) return;
+
         async function fetchTask() {
-            const res = await fetch(`/api/tasks/${params.id}`);
+
+            const res = await fetch(`/api/tasks/${id}`);
             const data = await res.json();
 
             setTitle(data.title);
@@ -37,14 +43,16 @@ export default function EditTaskPage() {
         }
 
         fetchTask();
-    }, [params.id]);
+
+    }, [id]);
 
     async function handleUpdate(
         e: React.FormEvent
     ) {
+
         e.preventDefault();
 
-        await fetch(`/api/tasks/${params.id}`, {
+        await fetch(`/api/tasks/${id}`,  {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -87,9 +95,7 @@ export default function EditTaskPage() {
 
                         <input
                             value={title}
-                            onChange={(e) =>
-                                setTitle(e.target.value)
-                            }
+                            onChange={(e) => setTitle(e.target.value)}
                             placeholder="Task Title"
                             className="rounded-xl bg-white/10 border border-white/20 p-4 text-white outline-none focus:ring-2 focus:ring-cyan-400"
                         />
@@ -97,9 +103,7 @@ export default function EditTaskPage() {
                         <textarea
                             rows={4}
                             value={description}
-                            onChange={(e) =>
-                                setDescription(e.target.value)
-                            }
+                            onChange={(e) => setDescription(e.target.value)}
                             placeholder="Task Description"
                             className="rounded-xl bg-white/10 border border-white/20 p-4 text-white outline-none focus:ring-2 focus:ring-cyan-400"
                         />
@@ -108,9 +112,7 @@ export default function EditTaskPage() {
 
                             <select
                                 value={priority}
-                                onChange={(e) =>
-                                    setPriority(e.target.value)
-                                }
+                                onChange={(e) => setPriority(e.target.value)}
                                 className="rounded-xl bg-white/10 border border-white/20 p-4 text-white"
                             >
                                 <option value="low">Low</option>
@@ -120,18 +122,12 @@ export default function EditTaskPage() {
 
                             <select
                                 value={status}
-                                onChange={(e) =>
-                                    setStatus(e.target.value)
-                                }
+                                onChange={(e) => setStatus(e.target.value)}
                                 className="rounded-xl bg-white/10 border border-white/20 p-4 text-white"
                             >
                                 <option value="todo">To Do</option>
-                                <option value="inprogress">
-                                    In Progress
-                                </option>
-                                <option value="done">
-                                    Done
-                                </option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="done">Done</option>
                             </select>
 
                         </div>
@@ -140,45 +136,25 @@ export default function EditTaskPage() {
 
                             <select
                                 value={taskEvent}
-                                onChange={(e) =>
-                                    setTaskEvent(e.target.value)
-                                }
+                                onChange={(e) => setTaskEvent(e.target.value)}
                                 className="rounded-xl bg-white/10 border border-white/20 p-4 text-white"
                             >
                                 <option value="General">General</option>
-                                <option value="Recruitment 2026">
-                                    Recruitment 2026
-                                </option>
-                                <option value="Workshop">
-                                    Workshop
-                                </option>
-                                <option value="Hackathon">
-                                    Hackathon
-                                </option>
+                                <option value="Recruitment 2026">Recruitment 2026</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Hackathon">Hackathon</option>
                             </select>
 
                             <select
                                 value={assignedTo}
-                                onChange={(e) =>
-                                    setAssignedTo(e.target.value)
-                                }
+                                onChange={(e) => setAssignedTo(e.target.value)}
                                 className="rounded-xl bg-white/10 border border-white/20 p-4 text-white"
                             >
-                                <option value="Unassigned">
-                                    Unassigned
-                                </option>
-                                <option value="Keerthi">
-                                    Keerthi
-                                </option>
-                                <option value="Rahul">
-                                    Rahul
-                                </option>
-                                <option value="Ananya">
-                                    Ananya
-                                </option>
-                                <option value="Priya">
-                                    Priya
-                                </option>
+                                <option value="Unassigned">Unassigned</option>
+                                <option value="Keerthi">Keerthi</option>
+                                <option value="Rahul">Rahul</option>
+                                <option value="Ananya">Ananya</option>
+                                <option value="Priya">Priya</option>
                             </select>
 
                         </div>
@@ -186,9 +162,7 @@ export default function EditTaskPage() {
                         <input
                             type="date"
                             value={dueDate}
-                            onChange={(e) =>
-                                setDueDate(e.target.value)
-                            }
+                            onChange={(e) => setDueDate(e.target.value)}
                             className="rounded-xl bg-white/10 border border-white/20 p-4 text-white"
                         />
 
@@ -208,4 +182,3 @@ export default function EditTaskPage() {
         </div>
     );
 }
-

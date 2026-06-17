@@ -6,6 +6,8 @@ import TaskCard from "@/components/TaskCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+
+
 type Task = {
   _id: string;
   title: string;
@@ -17,7 +19,12 @@ type Task = {
   dueDate: string;
 };
 
+
+
 export default function Dashboard() {
+
+  
+  
   const router = useRouter();
 
   const [tasks, setTasks] = useState<Task[]>([]);
