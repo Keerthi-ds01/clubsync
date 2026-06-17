@@ -1,3 +1,4 @@
+import Activity from "@/models/Activity";
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/Tasks";
 
@@ -20,20 +21,31 @@ export async function GET(){
     }
 }
 
-export async function POST(request: Request){
-    try{
+export async function POST(request: Request) {
+    try {
         await connectDB();
 
         const body = await request.json();
 
+        // Create Task
         const task = await Task.create(body);
 
-        return Response.json(task,{status: 201});
-    }catch(error){
+        // Create Activity Log
+        await Activity.create({
+            user: body.assignedTo || "Unknown",
+            action: "Created Task",
+            taskTitle: body.title,
+        });
+
+        return Response.json(task, { status: 201 });
+
+    } catch (error) {
+
         console.log(error);
+
         return Response.json(
-            {message:"Failed to create task"},
-            {status: 500}
+            { message: "Failed to create task" },
+            { status: 500 }
         );
     }
 }

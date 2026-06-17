@@ -1,6 +1,6 @@
 
 type TaskCardProps = {
-    id:string;
+    id: string;
     title: string;
     description: string;
     priority: string;
@@ -8,7 +8,6 @@ type TaskCardProps = {
     event: string;
     assignedTo: string;
     dueDate: string;
-    
 };
 
 const TaskCard = ({
@@ -20,15 +19,22 @@ const TaskCard = ({
     event,
     assignedTo,
     dueDate,
-    
 }: TaskCardProps) => {
-    const bgClass =
+
+    const priorityColor =
         priority.toLowerCase() === "high"
-            ? "bg-red-400"
+            ? "bg-red-500"
             : priority.toLowerCase() === "medium"
-            ? "bg-yellow-400"
-            : "bg-green-400";
-    
+            ? "bg-yellow-500"
+            : "bg-green-500";
+
+    const statusColor =
+        status.toLowerCase() === "completed"
+            ? "bg-green-500"
+            : status.toLowerCase() === "in progress"
+            ? "bg-cyan-500"
+            : "bg-orange-500";
+
     const handleDelete = async () => {
         const confirmed = confirm("Delete this task?");
 
@@ -41,46 +47,144 @@ const TaskCard = ({
         window.location.reload();
     };
 
-
     return (
-        <div
-            className={`flex h-auto w-72 self-start flex-col rounded-2xl border-2 border-black overflow-hidden shrink-0 ${bgClass}`}
-        >
-            <div className="bg-black p-3 text-xl font-bold text-teal-200">
-                <h2>{title}</h2>
+
+        <div className="
+        w-80
+        rounded-3xl
+        bg-white/10
+        backdrop-blur-xl
+        border
+        border-white/20
+        shadow-2xl
+        hover:scale-105
+        hover:border-cyan-400
+        hover:shadow-cyan-500/30
+        transition-all
+        duration-300
+        overflow-hidden
+        ">
+
+            {/* Header */}
+
+            <div className="flex justify-between items-center p-5 border-b border-white/10">
+
+                <h2 className="text-2xl font-bold text-white">
+                    {title}
+                </h2>
+
+                <span
+                    className={`${priorityColor} text-xs font-bold px-3 py-1 rounded-full text-white`}
+                >
+                    {priority.toUpperCase()}
+                </span>
+
             </div>
 
-            <div className="p-3 flex flex-col gap-2">
-                <div className="rounded-xl border border-black bg-teal-200 p-3 text-sm">
+            {/* Body */}
+
+            <div className="p-5 flex flex-col gap-4">
+
+                <div className="bg-white/10 rounded-2xl p-4 text-gray-200 leading-relaxed">
                     {description}
                 </div>
 
-                <div className="bg-white rounded-lg p-2 text-sm">
-                    <strong>Status:</strong> {status}
+                <div className="flex justify-between">
+
+                    <span
+                        className={`${statusColor} px-3 py-1 rounded-full text-sm font-semibold text-white`}
+                    >
+                        {status}
+                    </span>
+
+                    <span className="bg-cyan-500 px-3 py-1 rounded-full text-sm text-white">
+                        {event}
+                    </span>
+
                 </div>
 
-                <div className="bg-white rounded-lg p-2 text-sm">
-                    <strong>Event:</strong> {event}
+                <div className="flex items-center gap-3 bg-white/10 rounded-xl p-3">
+
+                    <div className="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <p className="text-white font-semibold">
+                            {assignedTo || "Unassigned"}
+                        </p>
+
+                        <p className="text-gray-400 text-sm">
+                            Assigned Member
+                        </p>
+
+                    </div>
+
                 </div>
 
-                <div className="bg-white rounded-lg p-2 text-sm">
-                    <strong>Assigned To:</strong> {assignedTo}
+                <div className="bg-white/10 rounded-xl p-3 text-gray-200">
+
+                    📅 Due Date
+
+                    <div className="mt-1 font-semibold text-white">
+
+                        {dueDate
+                            ? new Date(dueDate).toLocaleDateString("en-IN")
+                            : "Not Set"}
+
+                    </div>
+
                 </div>
 
-                <div className="bg-white rounded-lg p-2 text-sm">
-                    <strong>Due Date:</strong>{" "}
-                    {dueDate ? new Date(dueDate).toLocaleDateString() : "Not Set"}
-                    
+                {/* Buttons */}
+
+                <div className="flex gap-3 mt-2">
+
+                    <button
+                        onClick={() =>
+                            (window.location.href = `/edit-task/${id}`)
+                        }
+                        className="
+                        flex-1
+                        py-3
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-cyan-500
+                        to-blue-600
+                        font-semibold
+                        text-white
+                        hover:scale-105
+                        transition-all
+                        "
+                    >
+                        ✏️ Edit
+                    </button>
+
                     <button
                         onClick={handleDelete}
-                        className="bg-red-500 text-white p-2 rounded-lg font-bold"
+                        className="
+                        flex-1
+                        py-3
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-red-500
+                        to-pink-600
+                        font-semibold
+                        text-white
+                        hover:scale-105
+                        transition-all
+                        "
                     >
-                    Delete Task
+                        🗑 Delete
                     </button>
 
                 </div>
+
             </div>
+
         </div>
+
     );
 };
 

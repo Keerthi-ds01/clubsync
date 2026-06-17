@@ -8,7 +8,6 @@ const CreateTask = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("low");
-
     const [status, setStatus] = useState("todo");
     const [taskEvent, setTaskEvent] = useState("General");
     const [dueDate, setDueDate] = useState("");
@@ -20,11 +19,9 @@ const CreateTask = () => {
         try {
             const response = await fetch("/api/tasks", {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json",
                 },
-
                 body: JSON.stringify({
                     title,
                     description,
@@ -36,127 +33,212 @@ const CreateTask = () => {
                 }),
             });
 
-            const data = await response.json();
-            console.log("Saved task:", data);
-            console.log(data);
+            await response.json();
 
             setTitle("");
             setDescription("");
             setPriority("low");
             setStatus("todo");
             setTaskEvent("General");
+            setAssignedTo("Unassigned");
             setDueDate("");
 
-            alert("Task created successfully!");
+            alert("🎉 Task created successfully!");
         } catch (error) {
-            console.error("Error creating task:", error);
+            console.error(error);
             alert("Failed to create task.");
         }
     }
 
     return (
-        <div>
+        <div className="min-h-screen">
+
             <Navbar />
 
-            <h1 className="text-6xl font-bold m-3 p-3 text-teal-200 text-outline-black">
-                Want to create a new task?
-            </h1>
+            <div className="flex justify-center p-8">
 
-            <form
-                onSubmit={handleSubmit}
-                className="flex justify-center flex-col gap-4 m-4 p-3"
-            >
-                <h3 className="text-2xl">Whats the task name?</h3>
+                <div className="w-full max-w-3xl rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl p-8">
 
-                <input
-                    type="text"
-                    placeholder="Task name"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-white appearance-none"
-                />
+                    <h1 className="text-5xl font-extrabold text-center text-white mb-2">
+                        ✨ Create New Task
+                    </h1>
 
-                <h3 className="text-2xl">Describe it!!</h3>
+                    <p className="text-center text-gray-300 mb-8">
+                        Organize your club activities efficiently.
+                    </p>
 
-                <textarea
-                    placeholder="Task description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-white appearance-none"
-                ></textarea>
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-6"
+                    >
 
-                <h3 className="text-2xl">How important is it?</h3>
+                        <div>
+                            <label className="text-white font-semibold">
+                                Task Name
+                            </label>
 
-                <select
-                    value={priority}
-                    onChange={(e) => setPriority(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-white appearance-none"
-                >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
+                            <input
+                                type="text"
+                                placeholder="Enter task name"
+                                value={title}
+                                onChange={(e) =>
+                                    setTitle(e.target.value)
+                                }
+                                className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white outline-none focus:ring-2 focus:ring-cyan-400"
+                            />
+                        </div>
 
-                <h3 className="text-2xl">Task Status</h3>
+                        <div>
+                            <label className="text-white font-semibold">
+                                Description
+                            </label>
 
-                <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl"
-                >
-                    <option value="todo">To Do</option>
-                    <option value="inprogress">In Progress</option>
-                    <option value="done">Done</option>
-                </select>
+                            <textarea
+                                placeholder="Describe the task..."
+                                value={description}
+                                onChange={(e) =>
+                                    setDescription(e.target.value)
+                                }
+                                rows={4}
+                                className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white outline-none focus:ring-2 focus:ring-cyan-400"
+                            />
+                        </div>
 
-                <h3 className="text-2xl">Event</h3>
+                        <div className="grid md:grid-cols-2 gap-5">
 
-                <select
-                    value={taskEvent}
-                    onChange={(e) => setTaskEvent(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl"
-                >
-                    <option value="General">General</option>
-                    <option value="Recruitment 2026">
-                        Recruitment 2026
-                    </option>
-                    <option value="Workshop">Workshop</option>
-                    <option value="Hackathon">Hackathon</option>
-                </select>
-                
-                <h3 className="text-2xl">Assigned To</h3>
+                            <div>
+                                <label className="text-white font-semibold">
+                                    Priority
+                                </label>
 
-                <select
-                    value={assignedTo}
-                    onChange={(e) => setAssignedTo(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl"
-                >
-                <option value="Unassigned">Unassigned</option>
-                <option value="Keerthi">Keerthi</option>
-                <option value="Rahul">Rahul</option>
-                <option value="Ananya">Ananya</option>
-                <option value="Priya">Priya</option>
-                </select>
+                                <select
+                                    value={priority}
+                                    onChange={(e) =>
+                                        setPriority(e.target.value)
+                                    }
+                                    className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white"
+                                >
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
 
-                <h3 className="text-2xl">Due Date</h3>
+                            <div>
+                                <label className="text-white font-semibold">
+                                    Status
+                                </label>
 
-                <input
-                    type="date"
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
-                    className="w-full p-3 bg-white rounded-xl"
-                />
+                                <select
+                                    value={status}
+                                    onChange={(e) =>
+                                        setStatus(e.target.value)
+                                    }
+                                    className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white"
+                                >
+                                    <option value="todo">To Do</option>
+                                    <option value="inprogress">
+                                        In Progress
+                                    </option>
+                                    <option value="done">
+                                        Done
+                                    </option>
+                                </select>
+                            </div>
 
-                <button
-                    type="submit"
-                    className="w-full p-3 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-white appearance-none"
-                >
-                    Create Task
-                </button>
-            </form>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-5">
+
+                            <div>
+                                <label className="text-white font-semibold">
+                                    Event
+                                </label>
+
+                                <select
+                                    value={taskEvent}
+                                    onChange={(e) =>
+                                        setTaskEvent(e.target.value)
+                                    }
+                                    className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white"
+                                >
+                                    <option value="General">
+                                        General
+                                    </option>
+                                    <option value="Recruitment 2026">
+                                        Recruitment 2026
+                                    </option>
+                                    <option value="Workshop">
+                                        Workshop
+                                    </option>
+                                    <option value="Hackathon">
+                                        Hackathon
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="text-white font-semibold">
+                                    Assigned To
+                                </label>
+
+                                <select
+                                    value={assignedTo}
+                                    onChange={(e) =>
+                                        setAssignedTo(e.target.value)
+                                    }
+                                    className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white"
+                                >
+                                    <option value="Unassigned">
+                                        Unassigned
+                                    </option>
+                                    <option value="Keerthi">
+                                        Keerthi
+                                    </option>
+                                    <option value="Rahul">
+                                        Rahul
+                                    </option>
+                                    <option value="Ananya">
+                                        Ananya
+                                    </option>
+                                    <option value="Priya">
+                                        Priya
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <label className="text-white font-semibold">
+                                Due Date
+                            </label>
+
+                            <input
+                                type="date"
+                                value={dueDate}
+                                onChange={(e) =>
+                                    setDueDate(e.target.value)
+                                }
+                                className="mt-2 w-full rounded-xl bg-white/10 border border-white/20 p-4 text-white"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="mt-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 py-4 text-lg font-bold text-white shadow-lg hover:scale-105 transition-all duration-300"
+                        >
+                            🚀 Create Task
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
         </div>
     );
 };
 
 export default CreateTask;
-

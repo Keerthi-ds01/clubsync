@@ -1,6 +1,28 @@
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/Tasks";
 
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    await connectDB();
+
+    const { id } = await params;
+
+    const task = await Task.findById(id);
+
+    return Response.json(task);
+  } catch (error) {
+    console.log(error);
+
+    return Response.json(
+      { message: "Failed to fetch task" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
