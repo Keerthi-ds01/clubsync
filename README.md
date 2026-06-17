@@ -1,5 +1,17 @@
 # 🚀 ClubSync – Student Club Collaboration & Project Management Platform
 
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![React](https://img.shields.io/badge/React-19-61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB-Atlas-47A248)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-06B6D4)
+![Vercel](https://img.shields.io/badge/Deployment-Vercel-black)
+
+## 🌐 Live Demo
+
+https://club-sync-one.vercel.app/
+
+
 ## 📌 Project Overview
 
 **ClubSync** is a modern **Student Club Collaboration & Project Management Platform** developed using **Next.js**, **TypeScript**, **MongoDB Atlas**, and **Tailwind CSS**. The platform is designed to simplify the management of student clubs by providing a centralized workspace for organizing events, managing members, assigning tasks, and tracking club activities.
@@ -9,6 +21,7 @@ Originally based on a task management template, the application has been transfo
 This project was developed as part of the **Android Club Technical Recruitment 2026 – Web Development Task**.
 
 ---
+
 
 # 🌟 Features Implemented
 
@@ -344,7 +357,7 @@ Android Club Technical Recruitment 2026
 # 🔗 GitHub Repository
 
 ```
-https://github.com/<Keerthi-ds01>/ClubSync
+https://github.com/Keerthi-ds01/ClubSync
 ```
 
 
@@ -355,7 +368,7 @@ https://github.com/<Keerthi-ds01>/ClubSync
 ```
 https://club-sync-one.vercel.app/
 ```
-https://club-sync-git-main-keerthi-projects1.vercel.app/
+
 
 ---
 
